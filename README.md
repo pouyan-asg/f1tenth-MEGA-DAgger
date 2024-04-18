@@ -54,5 +54,19 @@ Enable remote desktop tools like NoMachine if you need.
 
 3 - Run following commands on your opponent car.
 ```bash
-KUNPENG'S CMD
+# Build the packages for running pure pursuit on the opponent car
+cd f1tenth_ws/
+colcon build
+
+source install/setup.bash # source the workspace
+ros2 launch f1tenth_stack bringup.py # enable the controller
+ros2 launch particle_filter localize.py # enable the particle filter to do localization
+ros2 run pure_pursuit pure_pursuit.py # run pure pursuit to follow the waypoints
+
+# Build the packages for integration services and ROS2 topic conversion on the opponent car
+cd ../is-workspace/
+colcon build
+source install/setup.bash # source the installation
+
+integration-service src/Integration-Service/examples/basic/ros2__domain_id_change.yaml # run the integration service to connect different ros2 topics under different ros2 domain ID
 ```
