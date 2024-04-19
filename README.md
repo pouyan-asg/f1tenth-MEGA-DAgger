@@ -1,12 +1,15 @@
 # f1tenth-MEGA-DAgger
- This is the repository of MEGA-DAgger on F1TENTH autonomous racing platform.
+ This is the repository of MEGA-DAgger for F1TENTH autonomous racing platform.
 
 **mega_dagger_agent** is a ROS2 foxy package. 
 Move the package in the /src folder of your workspace.
 Under the workspace directory, source the overlay and underlay, and colcon build it. 
 Then, enter the following commandlines for different usage.
 
-**KUNPENG'S PKG** is...
+**mega_dagger_opponent** contains 2 ROS2 foxy workspaces. 
+f1tenth_ws includes the pure pursuit package.
+is-workspace includes the integration service code to enable the communication between different ROS domain IDs. 
+Please check [IS official docs](https://integration-service.docs.eprosima.com/en/latest/examples/same_protocol/ros2_change_domain.html) for further details. 
 
 ## 1 f1tenth_gym_ros Simulation
 
@@ -54,19 +57,32 @@ Enable remote desktop tools like NoMachine if you need.
 
 3 - Run following commands on your opponent car.
 ```bash
-# Build the packages for running pure pursuit on the opponent car
+# in f1tenth workspace, running pure pursuit
 cd f1tenth_ws/
-colcon build
-
-source install/setup.bash # source the workspace
-ros2 launch f1tenth_stack bringup.py # enable the controller
-ros2 launch particle_filter localize.py # enable the particle filter to do localization
+# in the 1st terminal
+ros2 launch f1tenth_stack bringup_launch.py # enable the controller
+# in the 2nd terminal
+ros2 launch particle_filter localize_launch.py # enable the particle filter to do localization
+# in the 3rd terminal
 ros2 run pure_pursuit pure_pursuit.py # run pure pursuit to follow the waypoints
 
-# Build the packages for integration services and ROS2 topic conversion on the opponent car
+# if you enable the agent car's fake scan feature to detect the opponent car, please do the following
+# in integration service workspace, enable integration service and ROS2 topic conversion
 cd ../is-workspace/
-colcon build
-source install/setup.bash # source the installation
-
 integration-service src/Integration-Service/examples/basic/ros2__domain_id_change.yaml # run the integration service to connect different ros2 topics under different ros2 domain ID
 ```
+Check lidar scan of the agent car to see if the opponent car is detected. 
+
+## 3 Performance
+
+Please check the following youtube videos for further details. 
+
+[MEGA-DAgger ROS Simulation](https://youtu.be/qApr0d056ck)
+
+[MEGA-DAgger Single Car Experiment - 0317](https://youtu.be/WKTLcDU4JrU)
+
+[MEGA-DAgger Real World Experiment - 0317](https://youtu.be/dhB0yfGq3-U)
+
+[MEGA-DAgger Real World Experiment 2x Speed - 0317](https://youtu.be/mScCIROcDVE)
+
+[MEGA-DAgger Real World Experiment - 0312](https://youtu.be/iLBIYTLuNkQ)
