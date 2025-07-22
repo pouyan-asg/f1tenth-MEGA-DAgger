@@ -1,1 +1,32 @@
 These are some evaluations: I trained Megadagger for 500 iterations in three different modes: without any filter, with CBFborder and with both CBF border as well as agent. I needed to modify a bit the code for no filter because they applied a CBF border by default 
+
+Average for:  
+- no filter = 0.95654 
+- CBF border = 0.723537906 
+- both CBF = 0.685977011 
+
+Number of saved checkpoints: 
+
+no filter = 500 
+
+CBF border = 277 
+
+both CBF = 261 
+
+Average Total Steps Before Removal: 
+
+CBF border = 82.334 
+
+both CBF = 81.564 
+
+Average Total Steps After Removal: 
+
+CBF border = 16.372 
+
+both CBF = 15.792 
+
+Average Ratio of Steps Removed: 
+
+CBF border = 0.868536656 
+
+both CBF = 0.871698614
